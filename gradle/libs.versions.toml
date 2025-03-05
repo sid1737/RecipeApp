@@ -10,12 +10,13 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
-ksp-version = "2.0.0-1.0.21"
+ksp-version = "2.0.0-1.0.23"
 navigationCompose = "2.8.8"
 coroutines = "1.10.1"
 gson = "2.12.1"
 lifecycle = "2.8.7"
 coil = "2.7.0"
+hilt-plugin = "2.51.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,4 +61,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-version"}
-
+hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt-plugin" }
