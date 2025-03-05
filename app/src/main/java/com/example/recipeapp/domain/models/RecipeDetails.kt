@@ -7,7 +7,7 @@ data class RecipeDetails(
     val cookingLabel: String,
     val cookingTime: String,
     val prepLabel: String,
-    val prepNote: String,
+    val prepNote: String?,
     val prepTime: String,
     val prepTimeAsMinutes: Int
 )
