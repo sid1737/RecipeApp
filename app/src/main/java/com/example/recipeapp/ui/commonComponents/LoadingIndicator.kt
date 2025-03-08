@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.recipeListScreen.components
+package com.example.recipeapp.ui.commonComponents
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
