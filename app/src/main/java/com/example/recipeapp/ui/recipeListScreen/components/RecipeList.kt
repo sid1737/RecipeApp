@@ -18,7 +18,8 @@ import com.example.recipeapp.ui.theme.PaddingMedium
 fun RecipeList(
     numberOfColumns: Int,
     modifier: Modifier = Modifier,
-    recipes: List<Recipe>
+    recipes: List<Recipe>,
+    onRecipeCLick: (Recipe) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(numberOfColumns),
@@ -32,8 +33,8 @@ fun RecipeList(
             key = { recipe -> recipe.dynamicTitle.hashCode() }
         ) { recipe ->
             RecipeCard(
-                recipeName = recipe.dynamicTitle,
-                recipeUrl = recipe.dynamicThumbnail
+                recipe = recipe,
+                onRecipeClick = onRecipeCLick
             )
         }
     }
@@ -46,7 +47,8 @@ fun PreviewRecipeList() {
         numberOfColumns = 2,
         recipes = listOf(
             getDummyRecipe()
-        )
+        ),
+        onRecipeCLick = {}
     )
 }
 

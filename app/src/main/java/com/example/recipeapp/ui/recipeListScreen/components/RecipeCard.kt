@@ -1,5 +1,6 @@
 package com.example.recipeapp.ui.recipeListScreen.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,20 +20,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.SubcomposeAsyncImage
 import com.example.recipeapp.R
+import com.example.recipeapp.domain.models.Ingredient
+import com.example.recipeapp.domain.models.Recipe
+import com.example.recipeapp.domain.models.RecipeDetails
 import com.example.recipeapp.ui.theme.SpaceSmall
 
 @Composable
 fun RecipeCard(
-    recipeName: String,
-    recipeUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    recipe: Recipe,
+    onRecipeClick: (Recipe) -> Unit
 ) {
-    val contentDescriptionForRecipe = stringResource(R.string.recipe_name_content_description) + recipeName
+    val contentDescriptionForRecipe = stringResource(R.string.recipe_name_content_description) + recipe.dynamicTitle
     Column(
         modifier = modifier
             .fillMaxSize()
             .semantics {
                 contentDescription = contentDescriptionForRecipe
+            }
+            .clickable {
+                onRecipeClick(recipe)
             },
     ) {
         Box(
@@ -40,7 +47,7 @@ fun RecipeCard(
                 .fillMaxWidth()
         ) {
             SubcomposeAsyncImage(
-                model = recipeUrl,
+                model = recipe.dynamicThumbnail,
                 contentDescription = null,
                 loading = {
                     CircularProgressIndicator()
@@ -60,7 +67,7 @@ fun RecipeCard(
             modifier = Modifier.height(SpaceSmall)
         )
         Text(
-            text = recipeName,
+            text = recipe.dynamicTitle,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold
         )
@@ -71,7 +78,32 @@ fun RecipeCard(
 @Composable
 fun PreviewRecipeCard() {
     RecipeCard(
-        recipeName = stringResource(R.string.recipe_name_string_preview),
-        recipeUrl = stringResource(R.string.recipe_url_string_preview)
+        recipe = getDummyRecipe(),
+        onRecipeClick = {}
+    )
+}
+
+private fun getDummyRecipe(): Recipe {
+    return Recipe(
+        dynamicDescription = "dynamic description",
+        dynamicThumbnail = "dynamic thumbnail",
+        dynamicThumbnailAlt = "dynamic thumbnail alt",
+        dynamicTitle = "dynamic title",
+        ingredients = listOf(
+            Ingredient(
+                ingredient = "ingredient"
+            )
+        ),
+        recipeDetails = RecipeDetails(
+            amountLabel = "amount label",
+            amountNumber = 10,
+            cookTimeAsMinutes = 20,
+            cookingLabel = "cooking label",
+            cookingTime = "cooking time",
+            prepLabel = "prep label",
+            prepNote = "prep note",
+            prepTime = "prep time",
+            prepTimeAsMinutes = 40
+        )
     )
 }
