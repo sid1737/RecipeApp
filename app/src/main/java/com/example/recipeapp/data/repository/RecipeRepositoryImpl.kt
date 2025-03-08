@@ -9,7 +9,10 @@ import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.domain.repository.RecipeRepository
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.io.InputStreamReader
 import javax.inject.Inject
 
@@ -19,16 +22,14 @@ class RecipeRepositoryImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val gson: Gson
 ) : RecipeRepository {
-    override suspend fun getRecipe(): List<Recipe> {
-        return withContext(appDispatchers.io) {
-            try {
-                val jsonString = context.assets.open("recipesSample.json")
-                val inputStream = InputStreamReader(jsonString)
-                val listOfRecipes = gson.fromJson(inputStream, RecipeEntityList::class.java)
-                recipeMapper.map(listOfRecipes, Options(context))
-            } catch (exception: Exception) {
-                throw exception
-            }
-        }
+    override fun getRecipe(): Flow<List<Recipe>> {
+        return flow {
+            val jsonString = context.assets.open("recipes.json")
+            val inputStream = InputStreamReader(jsonString)
+            val listOfRecipes = gson.fromJson(inputStream, RecipeEntityList::class.java)
+            emit(recipeMapper.map(listOfRecipes, Options(context)))
+        }.catch {
+            throw it
+        }.flowOn(appDispatchers.io)
     }
 }
