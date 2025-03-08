@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">RecipeApp</string>
     <string name="recipe_title">Recipe</string>
-    <string name="error_message">Oops! We couldn\'t load the data. Please trt again</string>
+    <string name="error_message_recipe_list_screen">Oops! We couldn\'t load the data. Please try again</string>
+    <string name="error_message_recipe_details_screen">We couldn\’t load the item details from the file. Please go back and try again.</string>
     <string name="retry_button_text">Retry</string>
 
     <!-- Recipe Details Screen -->
