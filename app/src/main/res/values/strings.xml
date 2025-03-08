@@ -4,6 +4,12 @@
     <string name="error_message">Oops! We couldn\'t load the data. Please trt again</string>
     <string name="retry_button_text">Retry</string>
 
+    <!-- Recipe Details Screen -->
+    <string name="recipe_details_screen_serves">Serves</string>
+    <string name="recipe_details_screen_prep">Prep</string>
+    <string name="recipe_details_screen_cooking">Cooking</string>
+    <string name="recipe_details_screen_ingredients">Ingredients</string>
+
     <!-- preview strings -->
     <string name="recipe_name_string_preview">Recipe name</string>
     <string name="recipe_url_string_preview">Recipe Url</string>
