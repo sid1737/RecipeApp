@@ -24,13 +24,17 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.example.recipeapp.R
+import com.example.recipeapp.domain.models.Ingredient
 import com.example.recipeapp.domain.models.Recipe
+import com.example.recipeapp.domain.models.RecipeDetails
 import com.example.recipeapp.ui.commonComponents.LoadingIndicator
+import com.example.recipeapp.ui.commonComponents.ErrorScreen
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipeIngredientList
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipePrepDetailsComponent
 import com.example.recipeapp.ui.theme.PaddingLarge
@@ -49,13 +53,23 @@ fun RecipeDetailScreen(
     val recipeDetailsStateValue =
         recipeDetailScreenViewModel.recipeDetailsScreenState.collectAsStateWithLifecycle().value
 
+    RecipeDetailsScreen(recipeDetailsStateValue, modifier)
+}
+
+@Composable
+private fun RecipeDetailsScreen(
+    recipeDetailsStateValue: RecipeDetailsScreenState,
+    modifier: Modifier = Modifier
+) {
     when (recipeDetailsStateValue) {
         is RecipeDetailsScreenState.Success -> {
             GetRecipeDetailScreenStateComponents(modifier, recipeDetailsStateValue)
         }
 
         RecipeDetailsScreenState.Error -> {
-
+            ErrorScreen(
+                errorMessage = stringResource(R.string.error_message_recipe_details_screen)
+            )
         }
 
         RecipeDetailsScreenState.Loading -> {
@@ -153,4 +167,55 @@ private fun GetRecipeDetailScreenStateComponents(
             ingredientList = recipeDetailsState.recipe.ingredients
         )
     }
+}
+
+@Preview(showBackground = true, name = "Recipe Details Screen - Success")
+@Composable
+fun PreviewRecipeDetailsScreenSuccess() {
+    RecipeDetailsScreen(
+        recipeDetailsStateValue = RecipeDetailsScreenState.Success(
+            getDummyRecipe()
+        ),
+    )
+}
+
+@Preview(showBackground = true, name = "Recipe Details Screen - Loading")
+@Composable
+fun PreviewRecipeDetailsScreenLoading() {
+    RecipeDetailsScreen(
+        recipeDetailsStateValue = RecipeDetailsScreenState.Loading
+    )
+}
+
+@Preview(showBackground = true, name = "Recipe Details Screen - Success")
+@Composable
+fun PreviewRecipeDetailsScreenError() {
+    RecipeDetailsScreen(
+        recipeDetailsStateValue = RecipeDetailsScreenState.Error
+    )
+}
+
+private fun getDummyRecipe(): Recipe {
+    return Recipe(
+        dynamicDescription = "dynamic description",
+        dynamicThumbnail = "dynamic thumbnail",
+        dynamicThumbnailAlt = "dynamic thumbnail alt",
+        dynamicTitle = "dynamic title",
+        ingredients = listOf(
+            Ingredient(
+                ingredient = "ingredient"
+            )
+        ),
+        recipeDetails = RecipeDetails(
+            amountLabel = "amount label",
+            amountNumber = 10,
+            cookTimeAsMinutes = 20,
+            cookingLabel = "cooking label",
+            cookingTime = "cooking time",
+            prepLabel = "prep label",
+            prepNote = "prep note",
+            prepTime = "prep time",
+            prepTimeAsMinutes = 40
+        )
+    )
 }
