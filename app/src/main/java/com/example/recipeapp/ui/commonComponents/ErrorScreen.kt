@@ -1,4 +1,4 @@
-package com.example.recipeapp.ui.recipeListScreen.components
+package com.example.recipeapp.ui.commonComponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeapp.R
@@ -20,8 +19,7 @@ import com.example.recipeapp.ui.theme.PaddingMedium
 fun ErrorScreen(
     modifier: Modifier = Modifier,
     errorMessage: String,
-    errorButtonText: String,
-    retryButtonClick: () -> Unit,
+    retryButtonClick: (() -> Unit)? = null,
 ) {
     Box(
         modifier = modifier.fillMaxSize(),
@@ -34,25 +32,34 @@ fun ErrorScreen(
             Text(
                 text = errorMessage,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Red
+                color = MaterialTheme.colorScheme.error
             )
-            Button(
-                onClick = retryButtonClick
-            ) {
-                Text(
-                    text = errorButtonText
-                )
+            if (retryButtonClick != null) {
+                Button(
+                    onClick = retryButtonClick
+                ) {
+                    Text(
+                        text = stringResource(R.string.retry_button_text)
+                    )
+                }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "Error Screen With Retry")
 @Composable
-fun PreviewErrorScreen() {
+fun PreviewErrorScreeWithRetry() {
     ErrorScreen(
-        errorMessage = stringResource(R.string.error_message),
-        errorButtonText = stringResource(R.string.retry_button_text),
+        errorMessage = stringResource(R.string.error_message_recipe_list_screen),
         retryButtonClick = {}
+    )
+}
+
+@Preview(showBackground = true, name = "Error Screen Without Retry")
+@Composable
+fun PreviewErrorScreenWithoutRetry() {
+    ErrorScreen(
+        errorMessage = stringResource(R.string.error_message_recipe_list_screen),
     )
 }
