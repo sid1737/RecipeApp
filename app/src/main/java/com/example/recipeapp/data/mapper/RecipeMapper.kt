@@ -2,6 +2,7 @@ package com.example.recipeapp.data.mapper
 
 import coil.map.Mapper
 import coil.request.Options
+import com.example.recipeapp.data.Constants
 import com.example.recipeapp.data.model.IngredientEntity
 import com.example.recipeapp.data.model.RecipeDetailsEntity
 import com.example.recipeapp.data.model.RecipeEntityList
@@ -17,7 +18,7 @@ class RecipeMapper @Inject constructor() : Mapper<RecipeEntityList, List<Recipe>
         return data.recipes.map { recipe ->
             Recipe(
                 dynamicDescription = recipe.dynamicDescription,
-                dynamicThumbnail = recipe.dynamicThumbnail,
+                dynamicThumbnail = Constants.THUMBNAIL_URL + recipe.dynamicThumbnail,
                 dynamicThumbnailAlt = recipe.dynamicThumbnailAlt,
                 dynamicTitle = recipe.dynamicTitle,
                 ingredients = mapIngredientEntityToIngredient(recipe.ingredients),
