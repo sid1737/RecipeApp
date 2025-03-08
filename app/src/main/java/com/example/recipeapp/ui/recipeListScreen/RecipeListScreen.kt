@@ -14,7 +14,7 @@ import com.example.recipeapp.R
 import com.example.recipeapp.domain.models.Ingredient
 import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.domain.models.RecipeDetails
-import com.example.recipeapp.ui.recipeListScreen.components.ErrorScreen
+import com.example.recipeapp.ui.commonComponents.ErrorScreen
 import com.example.recipeapp.ui.commonComponents.LoadingIndicator
 import com.example.recipeapp.ui.navigation.ScreenNames
 import com.example.recipeapp.ui.recipeListScreen.components.RecipeList
@@ -80,8 +80,7 @@ private fun GetRecipeListScreenComponents(
         is RecipeListScreenState.Error -> {
             ErrorScreen(
                 modifier = modifier,
-                errorMessage = stringResource(R.string.error_message),
-                errorButtonText = stringResource(R.string.retry_button_text),
+                errorMessage = stringResource(R.string.error_message_recipe_list_screen),
                 retryButtonClick = {
                     onRetry()
                 }
