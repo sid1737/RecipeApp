@@ -23,9 +23,7 @@ fun RecipeAppNavigation(
     ) {
         composable<ScreenNames.RecipeListScreen> {
             RecipeListScreen(
-                onRecipeClick = { recipe ->
-                    navController.navigate(ScreenNames.RecipeDetailScreen(recipe))
-                }
+                navHostController = navController
             )
         }
         composable<ScreenNames.RecipeDetailScreen> (
@@ -34,7 +32,9 @@ fun RecipeAppNavigation(
             )
         ) {
             val arguments = it.toRoute<ScreenNames.RecipeDetailScreen>()
-            RecipeDetailScreen(recipe = arguments.recipe)
+            RecipeDetailScreen(
+                recipe = arguments.recipe
+            )
         }
     }
 }

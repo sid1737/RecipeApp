@@ -2,34 +2,49 @@ package com.example.recipeapp.ui.recipeListScreen
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.recipeapp.R
 import com.example.recipeapp.domain.models.Ingredient
 import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.domain.models.RecipeDetails
 import com.example.recipeapp.ui.recipeListScreen.components.ErrorScreen
 import com.example.recipeapp.ui.commonComponents.LoadingIndicator
+import com.example.recipeapp.ui.navigation.ScreenNames
 import com.example.recipeapp.ui.recipeListScreen.components.RecipeList
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun RecipeListScreen(
+    navHostController: NavHostController,
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier,
-    onRecipeClick: (Recipe) -> Unit
+    modifier: Modifier = Modifier
 ) {
     val recipeListScreenStateValue = recipeListViewModel.uiState.collectAsStateWithLifecycle().value
+
+    LaunchedEffect(Unit) {
+        recipeListViewModel.recipeListScreenEvents.collectLatest { event ->
+            if (event is RecipeListScreenEvents.NavigateToRecipeDetailsScreen) {
+                navHostController.navigate(ScreenNames.RecipeDetailScreen(event.recipe))
+            }
+        }
+    }
+
     GetRecipeListScreenComponents(
         modifier,
         recipeListScreenStateValue,
         {
             recipeListViewModel.retryFetchingDataFromFile()
         },
-        onRecipeClick
+        onRecipeClick =  { recipe: Recipe ->
+            recipeListViewModel.navigateToRecipeDetailsScreen(recipe)
+        }
     )
 }
 
