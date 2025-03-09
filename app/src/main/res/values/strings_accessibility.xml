@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="recipe_name_content_description">Recipe for</string>
+    <string name="recipe_cooking_time_hours_minutes_talkback">The cooking time is %s hours and %s minutes.</string>
+    <string name="recipe_cooking_time_hours_talkback">The cooking time is %s hours.</string>
+    <string name="recipe_cooking_time_minutes_talkback">The cooking time is %s minutes.</string>
+    <string name="recipe_prep_time_hours_minutes_talkback">The preparation time is %s hours and %s minutes.</string>
+    <string name="recipe_prep_time_hours_talkback">The preparation time is %s hours.</string>
+    <string name="recipe_prep_time_minutes_talkback">The preparation time is %s minutes.</string>
+    <string name="recipe_total_serves_talkback">"Total number of serves are %s."</string>
+    <string name="recipe_number_of_ingredients_talkback">Total Number of Ingredients is %d</string>
 </resources>
