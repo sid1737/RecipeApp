@@ -1,11 +1,9 @@
 package com.example.recipeapp.ui.recipeDetailsScreen.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -82,10 +80,10 @@ fun RecipePrepDetailsComponent(
 
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .clearAndSetSemantics {
-            contentDescription = "$contentDescriptionForServes, $contentDescriptionForPrepTime, $contentDescriptionForCooking"
-        },
+                contentDescription = "$contentDescriptionForServes, $contentDescriptionForPrepTime, $contentDescriptionForCooking"
+            },
     ) {
         HorizontalDivider(
             Modifier.height(1.dp)
@@ -96,108 +94,88 @@ fun RecipePrepDetailsComponent(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
-            horizontalArrangement = Arrangement.Center,
+                .height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .wrapContentWidth()
                     .weight(1f)
+                    .wrapContentHeight()
+                    .wrapContentWidth()
             ) {
-                Column(
+                Text(
+                    modifier = Modifier.clearAndSetSemantics {},
+                    text = stringResource(R.string.recipe_details_screen_serves),
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Normal,
+                    color = Color.Gray,
+                )
+                Spacer(
+                    Modifier.height(4.dp)
+                )
+                Text(
+                    text = totalServes,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .wrapContentWidth()
-                ) {
-                    Text(
-                        modifier = Modifier.clearAndSetSemantics {},
-                        text = stringResource(R.string.recipe_details_screen_serves),
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
-                        color = Color.Gray,
-                    )
-                    Spacer(
-                        Modifier.height(3.dp)
-                    )
-                    Text(
-                        text = totalServes,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .clearAndSetSemantics {}
-                    )
-                }
+                        .align(Alignment.CenterHorizontally)
+                        .clearAndSetSemantics {}
+                )
             }
             VerticalDivider(
                 modifier = Modifier
                     .width(1.dp)
-                    .wrapContentHeight()
-                    .height(50.dp)
             )
-            Box(
+            Column(
                 modifier = Modifier
-                    .wrapContentWidth()
                     .weight(1f)
+                    .wrapContentHeight()
+                    .wrapContentWidth()
             ) {
-                Column(
+                Text(
+                    text = stringResource(R.string.recipe_details_screen_prep),
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier.clearAndSetSemantics {}
+                )
+                Spacer(
+                    Modifier.height(4.dp)
+                )
+                Text(
+                    text = prepTimeAsString,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .wrapContentWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.recipe_details_screen_prep),
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
-                        color = Color.Gray,
-                        modifier = Modifier.clearAndSetSemantics {}
-                    )
-                    Spacer(
-                        Modifier.height(3.dp)
-                    )
-                    Text(
-                        text = prepTimeAsString,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .clearAndSetSemantics {},
-                    )
-                }
+                        .align(Alignment.CenterHorizontally)
+                        .clearAndSetSemantics {},
+                )
             }
             VerticalDivider(
                 modifier = Modifier
                     .width(1.dp)
-                    .wrapContentHeight()
-                    .height(50.dp)
             )
-            Box(
+            Column(
                 modifier = Modifier
-                    .wrapContentWidth()
                     .weight(1f)
+                    .wrapContentHeight()
+                    .wrapContentWidth()
             ) {
-                Column(
+                Text(
+                    text = stringResource(R.string.recipe_details_screen_cooking),
+                    fontWeight = FontWeight.SemiBold,
+                    fontStyle = FontStyle.Normal,
+                    color = Color.Gray,
+                    modifier = Modifier.clearAndSetSemantics {}
+                )
+                Spacer(
+                    Modifier.height(4.dp)
+                )
+                Text(
+                    text = cookingTimeAsString,
+                    fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .wrapContentHeight()
-                        .wrapContentWidth()
-                ) {
-                    Text(
-                        text = stringResource(R.string.recipe_details_screen_cooking),
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
-                        color = Color.Gray,
-                        modifier = Modifier.clearAndSetSemantics {}
-                    )
-                    Spacer(
-                        Modifier.height(3.dp)
-                    )
-                    Text(
-                        text = cookingTimeAsString,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .clearAndSetSemantics {}
-                    )
-                }
+                        .align(Alignment.CenterHorizontally)
+                        .clearAndSetSemantics {}
+                )
             }
         }
         Spacer(
