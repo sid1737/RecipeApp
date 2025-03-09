@@ -1,51 +1,60 @@
 package com.example.recipeapp.ui.recipeDetailsScreen
 
+import RecipeDetailScreenSubText
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.zIndex
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.example.recipeapp.R
-import com.example.recipeapp.domain.models.Ingredient
-import com.example.recipeapp.domain.models.Recipe
-import com.example.recipeapp.domain.models.RecipeDetails
 import com.example.recipeapp.ui.commonComponents.LoadingIndicator
 import com.example.recipeapp.ui.commonComponents.ErrorScreen
+import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipeDetailScreenTitle
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipeIngredientList
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipePrepDetailsComponent
-import com.example.recipeapp.ui.theme.PaddingLarge
-import com.example.recipeapp.ui.theme.PaddingMedium
+import com.example.recipeapp.ui.theme.Dimens.SpaceLarge
+import com.example.recipeapp.ui.theme.Dimens.SpaceMedium
+import com.example.recipeapp.ui.theme.Dimens.SpaceSmall
+import com.example.recipeapp.ui.uiState.RecipeUiState
 
 @Composable
 fun RecipeDetailScreen(
     modifier: Modifier = Modifier,
     recipeDetailScreenViewModel: RecipeDetailsViewModel = hiltViewModel(),
-    recipe: Recipe
+    recipe: RecipeUiState
 ) {
+    val localConfiguration = LocalConfiguration.current
+
+    val isPortrait = localConfiguration.orientation == Configuration.ORIENTATION_PORTRAIT
+
     LaunchedEffect(recipe) {
         recipeDetailScreenViewModel.loadRecipe(recipe)
     }
@@ -53,71 +62,71 @@ fun RecipeDetailScreen(
     val recipeDetailsStateValue =
         recipeDetailScreenViewModel.recipeDetailsScreenState.collectAsStateWithLifecycle().value
 
-    RecipeDetailsScreen(recipeDetailsStateValue, modifier)
+    if (isPortrait) {
+        RecipeDetailsScreenPortraitMode(
+            modifier,
+            recipeDetailsStateValue
+        )
+    } else {
+        RecipeDetailsScreenLandScapeMode(
+            modifier,
+            recipeDetailsStateValue
+        )
+    }
 }
 
 @Composable
-private fun RecipeDetailsScreen(
-    recipeDetailsStateValue: RecipeDetailsScreenState,
-    modifier: Modifier = Modifier
+private fun RecipeDetailsScreenPortraitMode(
+    modifier: Modifier = Modifier,
+    recipeDetailsStateValue: RecipeDetailsScreenState
 ) {
     when (recipeDetailsStateValue) {
         is RecipeDetailsScreenState.Success -> {
-            GetRecipeDetailScreenStateComponents(modifier, recipeDetailsStateValue)
+            GetRecipeDetailScreenPortraitModeComponents(
+                modifier,
+                recipeDetailsStateValue.recipe
+            )
         }
 
         RecipeDetailsScreenState.Error -> {
             ErrorScreen(
+                modifier = modifier,
                 errorMessage = stringResource(R.string.error_message_recipe_details_screen)
             )
         }
 
         RecipeDetailsScreenState.Loading -> {
-            LoadingIndicator()
+            LoadingIndicator(
+                modifier = modifier
+            )
         }
     }
 }
 
 @Composable
-private fun GetRecipeDetailScreenStateComponents(
-    modifier: Modifier,
-    recipeDetailsState: RecipeDetailsScreenState.Success
+private fun GetRecipeDetailScreenPortraitModeComponents(
+    modifier: Modifier = Modifier,
+    recipeUiState: RecipeUiState
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(PaddingMedium)
+            .padding(SpaceMedium)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .semantics {
-                    contentDescription = recipeDetailsState.recipe.dynamicTitle
-                },
-            text = recipeDetailsState.recipe.dynamicTitle,
-            style = MaterialTheme.typography.displayLarge,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+        RecipeDetailScreenTitle(
+            recipeScreenTitle = recipeUiState.recipeName
         )
         Spacer(
-            modifier = Modifier.height(PaddingMedium)
+            modifier = Modifier.height(SpaceMedium)
         )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .semantics {
-                    contentDescription = recipeDetailsState.recipe.dynamicDescription
-                },
-            text = recipeDetailsState.recipe.dynamicDescription,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Normal
+        RecipeDetailScreenSubText(
+            recipeSubText = recipeUiState.recipeDescription
         )
         Spacer(
-            modifier = Modifier.height(PaddingMedium)
+            modifier = Modifier.height(SpaceMedium)
         )
         Box(
             modifier = Modifier
@@ -127,7 +136,7 @@ private fun GetRecipeDetailScreenStateComponents(
             SubcomposeAsyncImage(
                 modifier = Modifier
                     .fillMaxSize(),
-                model = recipeDetailsState.recipe.dynamicThumbnail,
+                model = recipeUiState.recipeImageUrl,
                 contentDescription = null,
                 loading = {
                     CircularProgressIndicator()
@@ -136,86 +145,171 @@ private fun GetRecipeDetailScreenStateComponents(
             )
         }
         Spacer(
-            modifier = Modifier.height(PaddingMedium)
+            modifier = Modifier.height(SpaceMedium)
         )
         RecipePrepDetailsComponent(
-            totalServes = recipeDetailsState.recipe.recipeDetails.amountNumber.toString(),
-            prepTimeAsString = recipeDetailsState.recipe.recipeDetails.prepTime,
-            prepTimeAsMinutes = recipeDetailsState.recipe.recipeDetails.prepTimeAsMinutes,
-            cookingTimeAsString = recipeDetailsState.recipe.recipeDetails.cookingTime,
-            cookingTimeAsMinutes = recipeDetailsState.recipe.recipeDetails.cookTimeAsMinutes,
+            totalServes = recipeUiState.totalServes,
+            prepTimeAsString = recipeUiState.totalPrepTimeAsString,
+            prepTimeInHoursAndMinutes = recipeUiState.totalPreparationTimeInHoursAndMinutes,
+            cookingTimeAsString = recipeUiState.totalCookingTimeAsString,
+            cookingTimeInHoursAndMinutes = recipeUiState.totalCookingTimeInHoursAndMinutes,
         )
         Spacer(
-            modifier = Modifier.height(PaddingLarge)
+            modifier = Modifier.height(SpaceLarge)
         )
         Text(
             text = stringResource(R.string.recipe_details_screen_ingredients),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .zIndex(4f)
                 .fillMaxWidth()
                 .semantics {
                     heading()
                 }
         )
         Spacer(
-            modifier = Modifier.height(PaddingMedium)
+            modifier = Modifier.height(SpaceMedium)
         )
         RecipeIngredientList(
-            modifier = Modifier.zIndex(5f),
-            ingredientList = recipeDetailsState.recipe.ingredients
+            ingredientList = recipeUiState.ingredients
         )
     }
 }
 
-@Preview(showBackground = true, name = "Recipe Details Screen - Success")
 @Composable
-fun PreviewRecipeDetailsScreenSuccess() {
-    RecipeDetailsScreen(
-        recipeDetailsStateValue = RecipeDetailsScreenState.Success(
-            getDummyRecipe()
-        ),
-    )
-}
-
-@Preview(showBackground = true, name = "Recipe Details Screen - Loading")
-@Composable
-fun PreviewRecipeDetailsScreenLoading() {
-    RecipeDetailsScreen(
-        recipeDetailsStateValue = RecipeDetailsScreenState.Loading
-    )
-}
-
-@Preview(showBackground = true, name = "Recipe Details Screen - Success")
-@Composable
-fun PreviewRecipeDetailsScreenError() {
-    RecipeDetailsScreen(
-        recipeDetailsStateValue = RecipeDetailsScreenState.Error
-    )
-}
-
-private fun getDummyRecipe(): Recipe {
-    return Recipe(
-        dynamicDescription = "dynamic description",
-        dynamicThumbnail = "dynamic thumbnail",
-        dynamicThumbnailAlt = "dynamic thumbnail alt",
-        dynamicTitle = "dynamic title",
-        ingredients = listOf(
-            Ingredient(
-                ingredient = "ingredient"
+fun RecipeDetailsScreenLandScapeMode(
+    modifier: Modifier = Modifier,
+    recipeDetailsStateValue: RecipeDetailsScreenState
+) {
+    when (recipeDetailsStateValue) {
+        is RecipeDetailsScreenState.Success -> {
+            GetRecipeDetailScreenLandscapeModeComponents(
+                modifier = modifier,
+                recipeDetailsStateValue.recipe
             )
-        ),
-        recipeDetails = RecipeDetails(
-            amountLabel = "amount label",
-            amountNumber = 10,
-            cookTimeAsMinutes = 20,
-            cookingLabel = "cooking label",
-            cookingTime = "cooking time",
-            prepLabel = "prep label",
-            prepNote = "prep note",
-            prepTime = "prep time",
-            prepTimeAsMinutes = 40
+        }
+        RecipeDetailsScreenState.Error -> {
+            ErrorScreen(
+                modifier = modifier,
+                errorMessage = stringResource(R.string.error_message_recipe_details_screen)
+            )
+        }
+
+        RecipeDetailsScreenState.Loading -> {
+            LoadingIndicator(
+                modifier = modifier
+            )
+        }
+    }
+}
+
+@Composable
+private fun GetRecipeDetailScreenLandscapeModeComponents(
+    modifier: Modifier = Modifier,
+    recipe: RecipeUiState,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(SpaceMedium),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
+            contentAlignment = Alignment.Center,
+        ) {
+            SubcomposeAsyncImage(
+                modifier = Modifier
+                    .fillMaxSize(),
+                model = recipe.recipeImageUrl,
+                contentDescription = null,
+                loading = {
+                    CircularProgressIndicator()
+                },
+                contentScale = ContentScale.Fit
+            )
+        }
+        Spacer(
+            modifier = Modifier.width(SpaceSmall)
         )
+        VerticalDivider(
+            modifier = Modifier.width(1.dp)
+        )
+        Spacer(
+            modifier = Modifier.width(SpaceSmall)
+        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(SpaceMedium)
+                .verticalScroll(rememberScrollState())
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
+        ) {
+            RecipeDetailScreenTitle(
+                recipeScreenTitle = recipe.recipeName
+            )
+            Spacer(
+                modifier = Modifier.height(SpaceMedium)
+            )
+            RecipeDetailScreenSubText(
+                recipeSubText = recipe.recipeDescription
+            )
+            Spacer(
+                modifier = Modifier.height(SpaceMedium)
+            )
+            RecipePrepDetailsComponent(
+                totalServes = recipe.totalServes,
+                prepTimeAsString = recipe.totalPrepTimeAsString,
+                prepTimeInHoursAndMinutes = recipe.totalPreparationTimeInHoursAndMinutes,
+                cookingTimeAsString = recipe.totalCookingTimeAsString,
+                cookingTimeInHoursAndMinutes = recipe.totalCookingTimeInHoursAndMinutes,
+            )
+            Spacer(
+                modifier = Modifier.height(SpaceLarge)
+            )
+            Text(
+                text = stringResource(R.string.recipe_details_screen_ingredients),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics {
+                        heading()
+                    }
+            )
+            Spacer(
+                modifier = Modifier.height(SpaceMedium)
+            )
+            RecipeIngredientList(
+                ingredientList = recipe.ingredients
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewRecipeDetailsScreenPortraitModeWithAllThreeStates(
+    @PreviewParameter(RecipeDetailsScreenPreviewParameter::class)
+    recipeDetailsStateValue: RecipeDetailsScreenState
+) {
+    RecipeDetailsScreenPortraitMode(
+        recipeDetailsStateValue = recipeDetailsStateValue
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewRecipeDetailsScreenLandscapeModeWithAllThreeUiStates(
+    @PreviewParameter(RecipeDetailsScreenPreviewParameter::class)
+    recipeDetailsStateValue: RecipeDetailsScreenState
+) {
+    RecipeDetailsScreenLandScapeMode(
+        recipeDetailsStateValue = recipeDetailsStateValue
     )
 }

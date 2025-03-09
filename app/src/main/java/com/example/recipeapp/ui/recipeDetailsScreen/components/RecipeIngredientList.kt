@@ -14,12 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.example.recipeapp.domain.models.Ingredient
-import com.example.recipeapp.ui.theme.PaddingMedium
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.recipeapp.ui.theme.Dimens.SpaceMedium
 
 @Composable
 fun RecipeIngredientList(
-    ingredientList: List<Ingredient>,
+    ingredientList: List<String>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -31,9 +31,9 @@ fun RecipeIngredientList(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(
-                        bottom = PaddingMedium
+                        bottom = SpaceMedium
                     ),
-                horizontalArrangement = Arrangement.spacedBy(PaddingMedium),
+                horizontalArrangement = Arrangement.spacedBy(SpaceMedium),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
@@ -41,11 +41,21 @@ fun RecipeIngredientList(
                     contentDescription = null
                 )
                 Text(
-                    text = ingredient.ingredient,
+                    text = ingredient,
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Normal,
                 )
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewRecipeIngredientList() {
+    RecipeIngredientList(
+        ingredientList = listOf(
+            "Ingredient1"
+        )
+    )
 }

@@ -21,35 +21,77 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
-import com.example.recipeapp.ui.theme.SpaceSmall
+import com.example.recipeapp.ui.theme.Dimens.SpaceExtraSmall
 
 @Composable
 fun RecipePrepDetailsComponent(
     modifier: Modifier = Modifier,
     totalServes: String,
     prepTimeAsString: String,
-    prepTimeAsMinutes: Int,
+    prepTimeInHoursAndMinutes: Pair<Int, Int>,
     cookingTimeAsString: String,
-    cookingTimeAsMinutes: Int
+    cookingTimeInHoursAndMinutes: Pair<Int, Int>
 ) {
+    val (cookingHours, cookingMinutes) = cookingTimeInHoursAndMinutes
+    val contentDescriptionForCooking = if (cookingHours != 0 && cookingMinutes != 0) {
+        stringResource(
+            R.string.recipe_cooking_time_hours_minutes_talkback,
+            cookingHours,
+            cookingMinutes
+        )
+    } else if(cookingHours != 0) {
+        stringResource(
+            R.string.recipe_cooking_time_hours_talkback,
+            cookingHours
+        )
+    } else {
+        stringResource(
+            R.string.recipe_cooking_time_minutes_talkback,
+            cookingMinutes
+        )
+    }
+
+    val (prepHours, prepMinutes) = prepTimeInHoursAndMinutes
+    val contentDescriptionForPrepTime = if (prepHours != 0 && prepMinutes != 0) {
+        stringResource(
+            R.string.recipe_prep_time_hours_minutes_talkback,
+            prepHours,
+            prepHours
+        )
+    } else if(prepHours != 0) {
+        stringResource(
+            R.string.recipe_prep_time_hours_talkback,
+            prepHours
+        )
+    } else {
+        stringResource(
+            R.string.recipe_prep_time_minutes_talkback,
+            prepMinutes
+        )
+    }
+
+    val contentDescriptionForServes = stringResource(
+        R.string.recipe_total_serves_talkback,
+        totalServes
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
-            .semantics {
-                contentDescription = "This can be served between $totalServes and the required prep time is $prepTimeAsMinutes and cooking time is $cookingTimeAsMinutes"
-            }
+            .clearAndSetSemantics {
+            contentDescription = "$contentDescriptionForServes, $contentDescriptionForPrepTime, $contentDescriptionForCooking"
+        },
     ) {
         HorizontalDivider(
             Modifier.height(1.dp)
         )
         Spacer(
-            modifier = Modifier.height(SpaceSmall)
+            modifier = Modifier.height(SpaceExtraSmall)
         )
         Row(
             modifier = Modifier
@@ -159,7 +201,7 @@ fun RecipePrepDetailsComponent(
             }
         }
         Spacer(
-            modifier = Modifier.height(SpaceSmall)
+            modifier = Modifier.height(SpaceExtraSmall)
         )
         HorizontalDivider(
             Modifier.height(1.dp)
@@ -173,8 +215,8 @@ fun PreviewRecipeDetailsPrepComponent() {
     RecipePrepDetailsComponent(
         totalServes = "8",
         prepTimeAsString = "8",
-        prepTimeAsMinutes = 8,
-        cookingTimeAsMinutes = 20,
+        prepTimeInHoursAndMinutes = Pair(3,3),
+        cookingTimeInHoursAndMinutes = Pair(4,4),
         cookingTimeAsString = "20"
     )
 }
