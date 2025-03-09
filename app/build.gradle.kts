@@ -69,4 +69,9 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.serialization.json)
+    testImplementation(libs.test.mockito)
+    testImplementation(libs.test.coroutines.test)
+    testImplementation(libs.test.core.testing)
+    testImplementation(libs.flow.test)
+    testImplementation(libs.mockk.test)
 }
