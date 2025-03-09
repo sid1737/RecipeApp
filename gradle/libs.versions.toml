@@ -23,6 +23,7 @@ coroutines-test = "1.10.1"
 core-testing = "2.1.0"
 turbine-version = "1.2.0"
 mockk-version = "1.13.17"
+kotlin-test = "2.1.10"
 
 
 [libraries]
@@ -71,6 +72,7 @@ test-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-corout
 test-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 flow-test = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-version" }
 mockk-test = { group = "io.mockk", name = "mockk", version.ref = "mockk-version" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin-test"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
