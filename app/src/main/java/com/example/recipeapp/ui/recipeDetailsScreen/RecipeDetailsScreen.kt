@@ -40,6 +40,7 @@ import com.example.recipeapp.ui.commonComponents.ErrorScreen
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipeDetailScreenTitle
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipeIngredientList
 import com.example.recipeapp.ui.recipeDetailsScreen.components.RecipePrepDetailsComponent
+import com.example.recipeapp.ui.theme.Dimens.SpaceExtraLarge
 import com.example.recipeapp.ui.theme.Dimens.SpaceLarge
 import com.example.recipeapp.ui.theme.Dimens.SpaceMedium
 import com.example.recipeapp.ui.theme.Dimens.SpaceSmall
@@ -120,13 +121,13 @@ private fun GetRecipeDetailScreenPortraitModeComponents(
             recipeScreenTitle = recipeUiState.recipeName
         )
         Spacer(
-            modifier = Modifier.height(SpaceMedium)
+            modifier = Modifier.height(SpaceLarge)
         )
         RecipeDetailScreenSubText(
             recipeSubText = recipeUiState.recipeDescription
         )
         Spacer(
-            modifier = Modifier.height(SpaceMedium)
+            modifier = Modifier.height(SpaceLarge)
         )
         Box(
             modifier = Modifier
@@ -145,7 +146,7 @@ private fun GetRecipeDetailScreenPortraitModeComponents(
             )
         }
         Spacer(
-            modifier = Modifier.height(SpaceMedium)
+            modifier = Modifier.height(SpaceLarge)
         )
         RecipePrepDetailsComponent(
             totalServes = recipeUiState.totalServes,
@@ -155,7 +156,7 @@ private fun GetRecipeDetailScreenPortraitModeComponents(
             cookingTimeInHoursAndMinutes = recipeUiState.totalCookingTimeInHoursAndMinutes,
         )
         Spacer(
-            modifier = Modifier.height(SpaceLarge)
+            modifier = Modifier.height(SpaceExtraLarge)
         )
         Text(
             text = stringResource(R.string.recipe_details_screen_ingredients),
@@ -254,13 +255,13 @@ private fun GetRecipeDetailScreenLandscapeModeComponents(
                 recipeScreenTitle = recipe.recipeName
             )
             Spacer(
-                modifier = Modifier.height(SpaceMedium)
+                modifier = Modifier.height(SpaceLarge)
             )
             RecipeDetailScreenSubText(
                 recipeSubText = recipe.recipeDescription
             )
             Spacer(
-                modifier = Modifier.height(SpaceMedium)
+                modifier = Modifier.height(SpaceLarge)
             )
             RecipePrepDetailsComponent(
                 totalServes = recipe.totalServes,
@@ -270,7 +271,7 @@ private fun GetRecipeDetailScreenLandscapeModeComponents(
                 cookingTimeInHoursAndMinutes = recipe.totalCookingTimeInHoursAndMinutes,
             )
             Spacer(
-                modifier = Modifier.height(SpaceLarge)
+                modifier = Modifier.height(SpaceMedium)
             )
             Text(
                 text = stringResource(R.string.recipe_details_screen_ingredients),

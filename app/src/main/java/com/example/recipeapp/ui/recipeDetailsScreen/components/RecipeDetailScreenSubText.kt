@@ -21,7 +21,7 @@ fun RecipeDetailScreenSubText(
                 contentDescription = recipeSubText
             },
         text = recipeSubText,
-        style = MaterialTheme.typography.bodyMedium,
+        style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Normal
     )

@@ -8,4 +8,5 @@ object Dimens {
     val SpaceSmall = 10.dp
     val SpaceMedium = 16.dp
     val SpaceLarge = 24.dp
+    val SpaceExtraLarge = 40.dp
 }
