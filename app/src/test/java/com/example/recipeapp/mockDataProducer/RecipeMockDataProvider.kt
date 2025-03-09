@@ -7,6 +7,7 @@ import com.example.recipeapp.data.model.RecipeEntityList
 import com.example.recipeapp.domain.models.Ingredient
 import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.domain.models.RecipeDetails
+import com.example.recipeapp.ui.uiState.RecipeUiState
 
 object RecipeMockDataProvider {
 
@@ -63,6 +64,23 @@ object RecipeMockDataProvider {
                     prepTimeAsMinutes = 40
                 )
             )
+        )
+    }
+
+    fun getMockRecipeUiState(): RecipeUiState {
+        return RecipeUiState(
+            recipeDescription = "recipe description",
+            recipeImageUrl = "recipe image url",
+            alternativeTextForImage = "recipe alternative text image",
+            recipeName = "recipe name",
+            ingredients = listOf(
+                "ingredient"
+            ),
+            totalServes = "8",
+            totalCookingTimeAsString = "4h 20m",
+            totalCookingTimeInHoursAndMinutes = Pair(4, 20),
+            totalPrepTimeAsString = "3h 20m",
+            totalPreparationTimeInHoursAndMinutes = Pair(3, 20)
         )
     }
 }
