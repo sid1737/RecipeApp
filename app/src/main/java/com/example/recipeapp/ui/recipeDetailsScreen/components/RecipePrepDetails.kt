@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.R
 import com.example.recipeapp.ui.theme.Dimens.SpaceExtraSmall
+import com.example.recipeapp.ui.theme.Dimens.SpaceTiny
 
 @Composable
 fun RecipePrepDetailsComponent(
@@ -111,7 +112,7 @@ fun RecipePrepDetailsComponent(
                     color = Color.Gray,
                 )
                 Spacer(
-                    Modifier.height(4.dp)
+                    Modifier.height(SpaceTiny)
                 )
                 Text(
                     text = totalServes,
@@ -139,7 +140,7 @@ fun RecipePrepDetailsComponent(
                     modifier = Modifier.clearAndSetSemantics {}
                 )
                 Spacer(
-                    Modifier.height(4.dp)
+                    Modifier.height(SpaceTiny)
                 )
                 Text(
                     text = prepTimeAsString,
@@ -167,7 +168,7 @@ fun RecipePrepDetailsComponent(
                     modifier = Modifier.clearAndSetSemantics {}
                 )
                 Spacer(
-                    Modifier.height(4.dp)
+                    Modifier.height(SpaceTiny)
                 )
                 Text(
                     text = cookingTimeAsString,
