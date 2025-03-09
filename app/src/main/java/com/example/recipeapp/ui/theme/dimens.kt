@@ -2,6 +2,9 @@ package com.example.recipeapp.ui.theme
 
 import androidx.compose.ui.unit.dp
 
-val SpaceSmall = 5.dp
-val PaddingMedium = 16.dp
-val PaddingLarge = 24.dp
+object Dimens {
+    val SpaceExtraSmall = 8.dp
+    val SpaceSmall = 10.dp
+    val SpaceMedium = 16.dp
+    val SpaceLarge = 24.dp
+}
