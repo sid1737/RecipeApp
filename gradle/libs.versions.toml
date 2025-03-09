@@ -67,7 +67,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 # Unit Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 test-mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-version" }
-test-coroutines-test = { group = "org.jetbrains.kotlix", name = "kotlinx-coroutines-test", version.ref = "coroutines-test"}
+test-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test"}
 test-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 flow-test = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-version" }
 mockk-test = { group = "io.mockk", name = "mockk", version.ref = "mockk-version" }
