@@ -1,8 +1,7 @@
 package com.example.recipeapp.data.repository
 
 import android.content.Context
-import coil.request.Options
-import com.example.recipeapp.data.mapper.RecipeMapper
+import com.example.recipeapp.data.mapper.toRecipeList
 import com.example.recipeapp.data.model.RecipeEntityList
 import com.example.recipeapp.dispatchers.AppDispatchers
 import com.example.recipeapp.domain.models.Recipe
@@ -18,7 +17,6 @@ import javax.inject.Inject
 
 class RecipeRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val recipeMapper: RecipeMapper,
     private val appDispatchers: AppDispatchers,
     private val gson: Gson
 ) : RecipeRepository {
@@ -27,7 +25,7 @@ class RecipeRepositoryImpl @Inject constructor(
             val jsonString = context.assets.open("recipes.json")
             val inputStream = InputStreamReader(jsonString)
             val listOfRecipes = gson.fromJson(inputStream, RecipeEntityList::class.java)
-            emit(recipeMapper.map(listOfRecipes, Options(context)))
+            emit(listOfRecipes.toRecipeList())
         }.catch {
             throw it
         }.flowOn(appDispatchers.io)
