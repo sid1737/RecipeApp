@@ -2,13 +2,12 @@ package com.example.recipeapp.dispatchers
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 interface AppDispatchers {
-    val ui: CoroutineDispatcher
     val io: CoroutineDispatcher
 }
 
-class AppDispatchersImpl: AppDispatchers {
-    override val ui: CoroutineDispatcher = Dispatchers.Main
+class AppDispatchersImpl @Inject constructor(): AppDispatchers {
     override val io: CoroutineDispatcher = Dispatchers.IO
 }
