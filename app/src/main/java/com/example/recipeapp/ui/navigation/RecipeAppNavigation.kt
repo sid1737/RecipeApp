@@ -1,14 +1,15 @@
 package com.example.recipeapp.ui.navigation
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.ui.recipeDetailsScreen.RecipeDetailScreen
 import com.example.recipeapp.ui.recipeListScreen.RecipeListScreen
+import com.example.recipeapp.ui.uiState.RecipeUiState
 import kotlin.reflect.typeOf
 
 @Composable
@@ -17,7 +18,7 @@ fun RecipeAppNavigation(
     navController: NavHostController
 ) {
     NavHost(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         navController = navController,
         startDestination = ScreenNames.RecipeListScreen
     ) {
@@ -28,7 +29,7 @@ fun RecipeAppNavigation(
         }
         composable<ScreenNames.RecipeDetailScreen> (
             typeMap = mapOf(
-                typeOf<Recipe>() to CustomNavType.RecipeType
+                typeOf<RecipeUiState>() to CustomNavType.RecipeType
             )
         ) {
             val arguments = it.toRoute<ScreenNames.RecipeDetailScreen>()
