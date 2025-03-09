@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.recipeapp.R
-import com.example.recipeapp.ui.theme.PaddingMedium
+import com.example.recipeapp.ui.theme.Dimens.SpaceSmall
 
 @Composable
 fun ErrorScreen(
@@ -27,7 +27,7 @@ fun ErrorScreen(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(PaddingMedium)
+            verticalArrangement = Arrangement.spacedBy(SpaceSmall)
         ) {
             Text(
                 text = errorMessage,
