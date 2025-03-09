@@ -1,7 +1,7 @@
 package com.example.recipeapp.ui.recipeListScreen
 
-import com.example.recipeapp.domain.models.Recipe
+import com.example.recipeapp.ui.uiState.RecipeUiState
 
 sealed interface RecipeListScreenEvents {
-    data class NavigateToRecipeDetailsScreen(val recipe: Recipe): RecipeListScreenEvents
+    data class NavigateToRecipeDetailsScreen(val recipe: RecipeUiState): RecipeListScreenEvents
 }

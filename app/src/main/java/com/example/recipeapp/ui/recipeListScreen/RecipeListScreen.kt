@@ -7,17 +7,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.recipeapp.R
-import com.example.recipeapp.domain.models.Ingredient
-import com.example.recipeapp.domain.models.Recipe
-import com.example.recipeapp.domain.models.RecipeDetails
 import com.example.recipeapp.ui.commonComponents.ErrorScreen
 import com.example.recipeapp.ui.commonComponents.LoadingIndicator
 import com.example.recipeapp.ui.navigation.ScreenNames
 import com.example.recipeapp.ui.recipeListScreen.components.RecipeList
+import com.example.recipeapp.ui.uiState.RecipeUiState
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -42,7 +41,7 @@ fun RecipeListScreen(
         {
             recipeListViewModel.retryFetchingDataFromFile()
         },
-        onRecipeClick =  { recipe: Recipe ->
+        onRecipeClick =  { recipe: RecipeUiState ->
             recipeListViewModel.navigateToRecipeDetailsScreen(recipe)
         }
     )
@@ -53,7 +52,7 @@ private fun GetRecipeListScreenComponents(
     modifier: Modifier = Modifier,
     recipeListScreenStateValue: RecipeListScreenState,
     onRetry: () -> Unit,
-    onRecipeClick: (Recipe) -> Unit
+    onRecipeClick: (RecipeUiState) -> Unit
 ) {
     val localConfiguration = LocalConfiguration.current
 
@@ -89,59 +88,15 @@ private fun GetRecipeListScreenComponents(
     }
 }
 
-@Preview(showBackground = true, name = "RecipeListScreen - Success")
+@Preview(showBackground = true)
 @Composable
-fun PreviewRecipeListScreenSuccess() {
+fun PreviewRecipeListScreenWithAllThreeStates(
+    @PreviewParameter(RecipeListScreenPreviewParameter::class)
+    recipeListScreenStateValue: RecipeListScreenState
+) {
     GetRecipeListScreenComponents(
-        recipeListScreenStateValue = RecipeListScreenState.Success(
-            listOf(getDummyRecipe())
-        ),
+        recipeListScreenStateValue = recipeListScreenStateValue,
         onRetry = {},
         onRecipeClick = {}
-    )
-}
-
-@Preview(showBackground = true, name = "RecipeListScreen - Loading")
-@Composable
-fun PreviewRecipeListScreenLoading() {
-    GetRecipeListScreenComponents(
-        recipeListScreenStateValue = RecipeListScreenState.Loading,
-        onRetry = {},
-        onRecipeClick = {}
-    )
-}
-
-@Preview(showBackground = true, name = "RecipeListScreen - Error")
-@Composable
-fun PreviewRecipeListScreen() {
-    GetRecipeListScreenComponents(
-        recipeListScreenStateValue = RecipeListScreenState.Error,
-        onRetry = {},
-        onRecipeClick = {}
-    )
-}
-
-private fun getDummyRecipe(): Recipe {
-    return Recipe(
-        dynamicDescription = "dynamic description",
-        dynamicThumbnail = "dynamic thumbnail",
-        dynamicThumbnailAlt = "dynamic thumbnail alt",
-        dynamicTitle = "dynamic title",
-        ingredients = listOf(
-            Ingredient(
-                ingredient = "ingredient"
-            )
-        ),
-        recipeDetails = RecipeDetails(
-            amountLabel = "amount label",
-            amountNumber = 10,
-            cookTimeAsMinutes = 20,
-            cookingLabel = "cooking label",
-            cookingTime = "cooking time",
-            prepLabel = "prep label",
-            prepNote = "prep note",
-            prepTime = "prep time",
-            prepTimeAsMinutes = 40
-        )
     )
 }

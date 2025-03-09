@@ -3,14 +3,16 @@ package com.example.recipeapp.ui.recipeListScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipeapp.dispatchers.AppDispatchers
-import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.domain.repository.RecipeRepository
+import com.example.recipeapp.ui.uiState.RecipeUiState
+import com.example.recipeapp.ui.uiState.toRecipeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +35,11 @@ class RecipeListViewModel @Inject constructor(
 
     private fun fetchRecipeData() {
         viewModelScope.launch {
-            recipeRepository.getRecipe()
+            recipeRepository.getRecipe().map { listOfRecipes ->
+                listOfRecipes.map {
+                    it.toRecipeUiState()
+                }
+            }
                 .onStart {
                     _uiState.value = RecipeListScreenState.Loading
                 }.catch {
@@ -48,7 +54,7 @@ class RecipeListViewModel @Inject constructor(
         fetchRecipeData()
     }
 
-    fun navigateToRecipeDetailsScreen(recipe:Recipe) {
+    fun navigateToRecipeDetailsScreen(recipe: RecipeUiState) {
         viewModelScope.launch(appDispatchers.io) {
             _recipeListScreenEvents.emit(RecipeListScreenEvents.NavigateToRecipeDetailsScreen(recipe))
         }

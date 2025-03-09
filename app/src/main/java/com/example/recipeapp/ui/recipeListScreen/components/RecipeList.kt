@@ -9,28 +9,26 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.recipeapp.domain.models.Ingredient
-import com.example.recipeapp.domain.models.Recipe
-import com.example.recipeapp.domain.models.RecipeDetails
-import com.example.recipeapp.ui.theme.PaddingMedium
+import com.example.recipeapp.ui.theme.Dimens.SpaceMedium
+import com.example.recipeapp.ui.uiState.RecipeUiState
 
 @Composable
 fun RecipeList(
     numberOfColumns: Int,
     modifier: Modifier = Modifier,
-    recipes: List<Recipe>,
-    onRecipeCLick: (Recipe) -> Unit
+    recipes: List<RecipeUiState>,
+    onRecipeCLick: (RecipeUiState) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(numberOfColumns),
         modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(PaddingMedium),
-        horizontalArrangement = Arrangement.spacedBy(PaddingMedium),
-        verticalArrangement = Arrangement.spacedBy(PaddingMedium)
+        contentPadding = PaddingValues(SpaceMedium),
+        horizontalArrangement = Arrangement.spacedBy(SpaceMedium),
+        verticalArrangement = Arrangement.spacedBy(SpaceMedium)
     ) {
         items(
             recipes,
-            key = { recipe -> recipe.dynamicTitle.hashCode() }
+            key = { recipe -> recipe.recipeName.hashCode() }
         ) { recipe ->
             RecipeCard(
                 recipe = recipe,
@@ -52,27 +50,17 @@ fun PreviewRecipeList() {
     )
 }
 
-private fun getDummyRecipe(): Recipe {
-    return Recipe(
-        dynamicDescription = "dynamic description",
-        dynamicThumbnail = "dynamic thumbnail",
-        dynamicThumbnailAlt = "dynamic thumbnail alt",
-        dynamicTitle = "dynamic title",
-        ingredients = listOf(
-            Ingredient(
-                ingredient = "ingredient"
-            )
-        ),
-        recipeDetails = RecipeDetails(
-            amountLabel = "amount label",
-            amountNumber = 10,
-            cookTimeAsMinutes = 20,
-            cookingLabel = "cooking label",
-            cookingTime = "cooking time",
-            prepLabel = "prep label",
-            prepNote = "prep note",
-            prepTime = "prep time",
-            prepTimeAsMinutes = 40
-        )
+private fun getDummyRecipe(): RecipeUiState {
+    return RecipeUiState(
+        recipeDescription = "recipe description",
+        recipeImageUrl = "recipe image url",
+        alternativeTextForImage = "alternative text for image",
+        recipeName = "recipe name",
+        ingredients = listOf("recipe ingredients"),
+        totalServes = "8",
+        totalCookingTimeAsString = "4h 30m",
+        totalCookingTimeInHoursAndMinutes = Pair(4,2),
+        totalPrepTimeAsString = "15m",
+        totalPreparationTimeInHoursAndMinutes = Pair(6,2)
     )
 }
