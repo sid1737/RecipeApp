@@ -1,6 +1,6 @@
 package com.example.recipeapp.ui.uiState
 
-import com.example.recipeapp.data.Constants.THUMBNAIL_URL
+import com.example.recipeapp.ui.Constants.THUMBNAIL_URL
 import com.example.recipeapp.domain.models.Recipe
 import com.example.recipeapp.ui.utils.splitTotalMinutesIntoHoursAndMinutes
 
