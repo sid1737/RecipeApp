@@ -1,5 +1,5 @@
 # Recipe App
-This is a sample application consisting of two screens namely, ***recipes listing*** and ***recipe details*** using ***Jetpack Compose***, ***Clean Architecture** and ***Hilt***.
+This is a sample application consisting of two screens namely, ***recipes listing*** and ***recipe details*** using ***Jetpack Compose***, ***Clean Architecture*** and ***Hilt***.
 
 ## Table of Contents
 1. [Overview](#overview)
