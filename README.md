@@ -8,8 +8,7 @@ This is a sample application consisting of two screens namely, ***recipes listin
 4. [Recipe App Videos](#Recipe_App_Videos)
 
 ## Overview
-***Recipe App*** is a sample android app that fetches the data from ***recipes.json*** file and then displays the list of recipes to the user, when the user clicks on a recipe then he is
-navigated to the Recipe Details screen. The App also supports accessibility alogn with landscape and portrait view, also talkback to some extent
+***Recipe App*** is a sample android app that fetches the data from ***recipes.json*** file and then displays the list of recipes to the user, when the user clicks on a recipe then he is navigated to the Recipe Details screen. The App also supports accessibility along with landscape and portrait view, also talkback to some extent
 
 ## Features
 - ***Recipe List***: Displays a list of recipes (recipe image, name of recipe)
