@@ -5,7 +5,7 @@ This is a sample application consisting of two screens namely, ***recipes listin
 1. [Overview](#overview)
 2. [Features](#features)
 3. [Architecture](#architecture)
-4. [Recipe App Videos](#Recipe App Videos)
+4. [Recipe App Videos](#Recipe_App_Videos)
 
 ## Overview
 ***Recipe App*** is a sample android app that fetches the data from ***recipes.json*** file and then displays the list of recipes to the user, when the user clicks on a recipe then he is
@@ -37,6 +37,8 @@ https://github.com/user-attachments/assets/a6c2f0ca-9d6a-4aea-b7be-3c2d13dd6e2d
 https://github.com/user-attachments/assets/8a9a6150-5476-4734-9314-6893a5fb344e
 
 https://github.com/user-attachments/assets/779f52d6-2deb-442e-9b6a-14cb43bea2bd
+
+https://github.com/user-attachments/assets/dfe509f4-855c-4ecf-b31d-672d46656794
 
 
 
