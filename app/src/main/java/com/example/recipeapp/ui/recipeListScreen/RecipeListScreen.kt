@@ -25,7 +25,7 @@ fun RecipeListScreen(
     recipeListViewModel: RecipeListViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val recipeListScreenStateValue = recipeListViewModel.uiState.collectAsStateWithLifecycle().value
+    val recipeListScreenStateValue = recipeListViewModel.recipeListUiState.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
         recipeListViewModel.recipeListScreenEvents.collectLatest { event ->

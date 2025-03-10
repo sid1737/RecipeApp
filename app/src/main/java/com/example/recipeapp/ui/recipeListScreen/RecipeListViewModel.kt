@@ -24,7 +24,7 @@ class RecipeListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<RecipeListScreenState>(RecipeListScreenState.Loading)
-    val uiState = _uiState.asStateFlow()
+    val recipeListUiState = _uiState.asStateFlow()
 
     private val _recipeListScreenEvents = MutableSharedFlow<RecipeListScreenEvents>()
     val recipeListScreenEvents = _recipeListScreenEvents.asSharedFlow()
@@ -34,7 +34,7 @@ class RecipeListViewModel @Inject constructor(
     }
 
     private fun fetchRecipeData() {
-        viewModelScope.launch {
+        viewModelScope.launch(appDispatchers.io) {
             recipeRepository.getRecipe().map { listOfRecipes ->
                 listOfRecipes.map {
                     it.toRecipeUiState()
