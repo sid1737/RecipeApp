@@ -20,7 +20,7 @@ class RecipeRepositoryImpl @Inject constructor(
     private val appDispatchers: AppDispatchers,
     private val gson: Gson
 ) : RecipeRepository {
-    override fun getRecipe(): Flow<List<Recipe>> {
+    override suspend fun getRecipe(): Flow<List<Recipe>> {
         return flow {
             val jsonString = context.assets.open("recipes.json")
             val inputStream = InputStreamReader(jsonString)

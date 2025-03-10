@@ -4,5 +4,5 @@ import com.example.recipeapp.domain.models.Recipe
 import kotlinx.coroutines.flow.Flow
 
 interface RecipeRepository {
-    fun getRecipe(): Flow<List<Recipe>>
+    suspend fun getRecipe(): Flow<List<Recipe>>
 }
