@@ -3,7 +3,6 @@ package com.example.recipeapp.ui.recipeDetailsScreen
 import RecipeDetailScreenSubText
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -129,22 +128,16 @@ private fun GetRecipeDetailScreenPortraitModeComponents(
         Spacer(
             modifier = Modifier.height(SpaceLarge)
         )
-        Box(
+        SubcomposeAsyncImage(
             modifier = Modifier
                 .fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier
-                    .fillMaxSize(),
-                model = recipeUiState.recipeImageUrl,
-                contentDescription = null,
-                loading = {
-                    CircularProgressIndicator()
-                },
-                contentScale = ContentScale.Crop
-            )
-        }
+            model = recipeUiState.recipeImageUrl,
+            contentDescription = null,
+            loading = {
+                CircularProgressIndicator()
+            },
+            contentScale = ContentScale.Crop
+        )
         Spacer(
             modifier = Modifier.height(SpaceLarge)
         )
@@ -216,23 +209,16 @@ private fun GetRecipeDetailScreenLandscapeModeComponents(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
+        SubcomposeAsyncImage(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .weight(1f),
-            contentAlignment = Alignment.Center,
-        ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier
-                    .fillMaxSize(),
-                model = recipe.recipeImageUrl,
-                contentDescription = null,
-                loading = {
-                    CircularProgressIndicator()
-                },
-                contentScale = ContentScale.Fit
-            )
-        }
+            model = recipe.recipeImageUrl,
+            contentDescription = null,
+            loading = {
+                CircularProgressIndicator()
+            }
+        )
         Spacer(
             modifier = Modifier.width(SpaceSmall)
         )
