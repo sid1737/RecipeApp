@@ -22,7 +22,6 @@ mockito-version = "5.14.1"
 coroutines-test = "1.10.1"
 core-testing = "2.1.0"
 turbine-version = "1.2.0"
-mockk-version = "1.13.17"
 kotlin-test = "2.1.10"
 
 
@@ -71,7 +70,6 @@ test-mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mo
 test-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test"}
 test-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "core-testing" }
 flow-test = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine-version" }
-mockk-test = { group = "io.mockk", name = "mockk", version.ref = "mockk-version" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin-test"}
 
 [plugins]
