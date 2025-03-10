@@ -6,21 +6,18 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+@InstallIn(ViewModelComponent::class)
+object GsonAndContextModule {
 
     @Provides
-    @Singleton
     fun provideContext(@ApplicationContext context: Context): Context {
         return context
     }
 
     @Provides
-    @Singleton
     fun providesGson(): Gson = GsonBuilder().create()
 }
