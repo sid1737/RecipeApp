@@ -17,6 +17,8 @@ import kotlin.test.assertTrue
 class RecipeDetailsViewModelTest {
     private val testDispatcher = MockCoroutineDispatchers()
 
+    private lateinit var recipeDetailsViewModel: RecipeDetailsViewModel
+
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
@@ -26,14 +28,14 @@ class RecipeDetailsViewModelTest {
     fun `when recipe details are loaded it fires the Recipe Details Screen Success event with the selected recipe ui data object `() {
         runTest(testDispatcher.io) {
             // Given
-            val viewModel = RecipeDetailsViewModel()
+            recipeDetailsViewModel = RecipeDetailsViewModel()
             val mockExpectedRecipeUiState = RecipeMockDataProvider.getMockRecipeUiState()
 
             // When
-            viewModel.loadRecipe(mockExpectedRecipeUiState)
+            recipeDetailsViewModel.loadRecipe(mockExpectedRecipeUiState)
 
             // Then
-            viewModel.recipeDetailsScreenState.test {
+            recipeDetailsViewModel.recipeDetailsScreenState.test {
                 awaitItem().let {
                     assertTrue(it is RecipeDetailsScreenState.Success)
                     assertEquals(expected = mockExpectedRecipeUiState, actual = it.recipe)

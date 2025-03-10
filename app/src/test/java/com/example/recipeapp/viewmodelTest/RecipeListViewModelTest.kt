@@ -26,6 +26,8 @@ class RecipeListViewModelTest {
 
     private val testDispatcher = MockCoroutineDispatchers()
 
+    private lateinit var recipeListViewModel: RecipeListViewModel
+
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
@@ -44,16 +46,16 @@ class RecipeListViewModelTest {
                     expectedDomainRecipeList
                 )
             )
-            val viewModel = RecipeListViewModel(recipeRepository, testDispatcher)
+            recipeListViewModel = RecipeListViewModel(recipeRepository, testDispatcher)
 
             // Then
-            viewModel.uiState.test {
+            recipeListViewModel.recipeListUiState.test {
                 assertEquals(awaitItem(), RecipeListScreenState.Loading)
                 awaitItem().let {
                     assertTrue(it is RecipeListScreenState.Success)
-                    assertEquals(expectedRecipeUiStateList, it.recipes)
+                    assertEquals(expected = expectedRecipeUiStateList, actual = it.recipes)
                 }
-                cancelAndIgnoreRemainingEvents()
+                cancelAndConsumeRemainingEvents()
             }
         }
     }
@@ -67,13 +69,13 @@ class RecipeListViewModelTest {
                     throw Exception()
                 }
             )
-            val viewModel = RecipeListViewModel(recipeRepository, testDispatcher)
+            recipeListViewModel = RecipeListViewModel(recipeRepository, testDispatcher)
 
             // Then
-            viewModel.uiState.test {
-                assertEquals(awaitItem(), RecipeListScreenState.Loading)
-                assertEquals(awaitItem(), RecipeListScreenState.Error)
-                cancelAndIgnoreRemainingEvents()
+            recipeListViewModel.recipeListUiState.test {
+                assertEquals(expected = awaitItem(), actual = RecipeListScreenState.Loading)
+                assertEquals(expected = awaitItem(), actual = RecipeListScreenState.Error)
+                cancelAndConsumeRemainingEvents()
             }
         }
     }
@@ -82,19 +84,19 @@ class RecipeListViewModelTest {
     fun `when navigate to recipe detail screen is triggered, it emits the navigate to recipe details event with right recipe ui object`() {
         runTest(testDispatcher.io) {
             // Given
-            val viewModel = RecipeListViewModel(recipeRepository, testDispatcher)
+            recipeListViewModel = RecipeListViewModel(recipeRepository, testDispatcher)
             val mockRecipeUiStateObject = RecipeMockDataProvider.getMockRecipeUiState()
 
             // When
-            viewModel.navigateToRecipeDetailsScreen(mockRecipeUiStateObject)
+            recipeListViewModel.navigateToRecipeDetailsScreen(mockRecipeUiStateObject)
 
             // Then
-            viewModel.recipeListScreenEvents.test {
+            recipeListViewModel.recipeListScreenEvents.test {
                 awaitItem().let {
                     assertTrue(it is RecipeListScreenEvents.NavigateToRecipeDetailsScreen)
                     assertEquals(expected = mockRecipeUiStateObject, actual = it.recipe)
                 }
-                cancelAndIgnoreRemainingEvents()
+                cancelAndConsumeRemainingEvents()
             }
         }
     }
