@@ -1,7 +1,6 @@
 package com.example.recipeapp.ui.recipeListScreen.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -42,20 +41,15 @@ fun RecipeCard(
                 onRecipeClick(recipe)
             },
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier.fillMaxSize(),
-                model = recipe.recipeImageUrl,
-                contentDescription = null,
-                loading = {
-                    CircularProgressIndicator()
-                },
-                contentScale = ContentScale.Crop
-            )
-        }
+        SubcomposeAsyncImage(
+            modifier = Modifier.fillMaxSize(),
+            model = recipe.recipeImageUrl,
+            contentDescription = null,
+            loading = {
+                CircularProgressIndicator()
+            },
+            contentScale = ContentScale.Crop
+        )
         Spacer(
             modifier = Modifier.height(SpaceExtraSmall)
         )
