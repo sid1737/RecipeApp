@@ -5,7 +5,7 @@ This is a sample application consisting of two screens namely, ***recipes listin
 1. [Overview](#overview)
 2. [Features](#features)
 3. [Architecture](#architecture)
-4. [Recipe App Videos](#Recipe_App_Videos)
+4. [Videos](#videos)
 
 ## Overview
 ***Recipe App*** is a sample android app that fetches the data from ***recipes.json*** file and then displays the list of recipes to the user, when the user clicks on a recipe then he is navigated to the Recipe Details screen. The App also supports accessibility along with landscape and portrait view, also talkback to some extent
@@ -26,7 +26,7 @@ This is a sample application consisting of two screens namely, ***recipes listin
 - **Coroutines & Flow**:
   - Asynchronous data fetching, real-time updates.
 
- ## Recipe App Videos
+ ## Videos
 Here re some videos of the app supporting portrait and landscape modes
 
 https://github.com/user-attachments/assets/21798344-03ec-429c-9158-6d2c802ba128
