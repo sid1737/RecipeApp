@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 sealed class ScreenNames {
     @Serializable
-    object RecipeListScreen: ScreenNames()
+    data object RecipeListScreen : ScreenNames()
 
     @Serializable
-    data class RecipeDetailScreen(val recipe: RecipeUiState): ScreenNames()
+    data class RecipeDetailScreen(val recipe: RecipeUiState) : ScreenNames()
 }
